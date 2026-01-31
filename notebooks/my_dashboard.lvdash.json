@@ -1,0 +1,233 @@
+{
+  "datasets": [
+    {
+      "name": "ca235c33",
+      "displayName": "marts_posts_users",
+      "queryLines": [
+        "SELECT * FROM workspace.default.marts_posts_users"
+      ]
+    },
+    {
+      "name": "a24e5ee4",
+      "displayName": "marts_top_tags",
+      "queryLines": [
+        "SELECT * FROM workspace.default.marts_top_tags limit 10;"
+      ]
+    },
+    {
+      "name": "66215d7b",
+      "displayName": "User Reputation and Their Average Answer Scores",
+      "queryLines": [
+        "-- get a relationship if user has high reputation what is their avg_answer_score \r\n",
+        "select avg(Score) as average_answer_score , Reputation, Id as UserID\r\n",
+        "from default.marts_posts_users\r\n",
+        "where PostType=\"Answer\"\r\n",
+        "group by Id, Reputation"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "549bbe29",
+      "displayName": "posts_users",
+      "layout": [
+        {
+          "widget": {
+            "name": "2cdd6859",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ca235c33",
+                  "fields": [
+                    {
+                      "name": "monthly(PostCreationDate)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `PostCreationDate`)"
+                    },
+                    {
+                      "name": "count(PostId)",
+                      "expression": "COUNT(`PostId`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(PostCreationDate)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(PostId)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "33e06e4f",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a24e5ee4",
+                  "fields": [
+                    {
+                      "name": "tag_exploded",
+                      "expression": "`tag_exploded`"
+                    },
+                    {
+                      "name": "sum(tags_count)",
+                      "expression": "SUM(`tags_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "tag_exploded",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(tags_count)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "bfdc0ae0",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "66215d7b",
+                  "fields": [
+                    {
+                      "name": "Reputation",
+                      "expression": "`Reputation`"
+                    },
+                    {
+                      "name": "average_answer_score",
+                      "expression": "`average_answer_score`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "scatter",
+              "encodings": {
+                "x": {
+                  "fieldName": "Reputation",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "average_answer_score",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "17d32aa4",
+            "multilineTextboxSpec": {
+              "lines": [
+                "if user has high reputation is does  not mean they have high answer score. may be this skewed, who dont have  high reputation, they dont have post lot. but those few genarated post has good answer scores"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 15,
+            "width": 6,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "b040dc2b",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "f694e253",
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {},
+              "frame": {
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
