@@ -31,7 +31,7 @@ dags:
     # subpath within the repo where dags are located
     # should be "" if dags are at repo root
     subPath: "dags"
-    credentialsSecret: git-credentials
+    credentialsSecret: null
 
 
 postgresql:
