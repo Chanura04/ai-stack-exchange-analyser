@@ -48,6 +48,5 @@ docker build --pull -t my-dags:0.0.1 -f cicd/Dockerfile .
 
 
 
-
 #get all pods , deployments , services in airflow namespace
 kubectl get all -n airflow

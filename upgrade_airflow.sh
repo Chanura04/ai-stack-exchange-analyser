@@ -26,3 +26,9 @@ helm upgrade airflow apache-airflow/airflow --namespace airflow -f chart/values-
 
 # Port forward the API server
 kubectl port-forward svc/airflow-api-server 8080:8080 --namespace airflow
+
+ kubectl exec -n airflow pod/airflow-dag-processor-6b79c559f7-twd5c -c dag-processor -- ls -la /opt/airflow/dags/.worktrees/f14c85361c001d5a08b94a58fa8e072626eaf344/dags
+
+
+# for update the git credentials 
+kubectl apply -f k8s/secrets/git-secrets.yaml -n airflow

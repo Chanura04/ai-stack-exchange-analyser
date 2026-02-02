@@ -20,8 +20,8 @@ dags:
     # git repo clone url
     # ssh example: git@github.com:apache/airflow.git
     # https example: https://github.com/apache/airflow.git
-    repo: https://github.com/jayzern/databricks-airflow3.0-template.git
-    branch: feature/demo
+    repo: https://github.com/Chanura04/ai-stack-exchange-analyser.git
+    branch: main
     rev: HEAD
     # The git revision (branch, tag, or hash) to check out, v4 only
     ref: main
@@ -31,7 +31,7 @@ dags:
     # subpath within the repo where dags are located
     # should be "" if dags are at repo root
     subPath: "dags"
-    credentialsSecret: null
+    credentialsSecret: git-credentials
 
 
 postgresql:
