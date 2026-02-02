@@ -14,8 +14,8 @@ with DAG(
         print("Hello world, from Airflow_2!")
     
     @task
-    def goodbye_world():
+    def goodbye_world_2():
         time.sleep(5)
         print("Goodbye world, from Airflow_2!")
     
-    hello_world() >> goodbye_world()
+    hello_world() >> goodbye_world_2()

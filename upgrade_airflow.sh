@@ -30,7 +30,8 @@ kubectl port-forward svc/airflow-api-server 8080:8080 --namespace airflow
 
 #get all pods , deployments , services in airflow namespace
 # kubectl get all -n airflow
-# kubectl exec -n airflow pod/airflow-dag-processor-6b79c559f7-twd5c -c dag-processor -- ls -la /opt/airflow/dags/.worktrees/f14c85361c001d5a08b94a58fa8e072626eaf344/dags
+#  kubectl exec -n airflow pod/airflow-dag-processor-6d5674d99b-kqllf  -c dag-processor -- ls -la /opt/airflow/dags/
+# kubectl exec -n airflow pod/airflow-dag-processor-6d5674d99b-kqllf  -c dag-processor -- ls -la /opt/airflow/dags/.worktrees/841b7c0c2d12501bd79fe06e0cb467c98496a507
 
 
 # # for update the git credentials 
