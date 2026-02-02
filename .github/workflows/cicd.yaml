@@ -20,9 +20,9 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           IMAGE_TAG=0.0.1
-          IMAGE_NAME=my-dags
-          docker build --pull --tag ${{ secrets.ECR_REGISTRY }}/my-dags:0.0.1 -f cicd/Dockerfile .
-          docker push ${{ secrets.ECR_REGISTRY }}/my-dags-repo:0.0.1
+          ECR_REPO=my-dags-repo   # must match your ECR repository
+          docker build --pull --tag ${{ secrets.ECR_REGISTRY }}/$ECR_REPO:$IMAGE_TAG -f cicd/Dockerfile .
+          docker push ${{ secrets.ECR_REGISTRY }}/$ECR_REPO:$IMAGE_TAG
 
 
 
