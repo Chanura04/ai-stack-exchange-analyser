@@ -1,0 +1,18 @@
+kind create cluster --image kindest/node:v1.29.4
+
+kubectl create namespace my-namespace
+
+kubectl apply -f pod.yaml
+
+kubectl get pods -n my-namespace
+
+kubectl describe pod sleep-pod -n my-namespace
+
+kubectl logs sleep-pod -n my-namespace
+
+
+for delete pod:
+kubectl delete pod sleep-pod -n my-namespace
+
+for delete cluster:
+kind delete cluster --name kind

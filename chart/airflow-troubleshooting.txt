@@ -1,0 +1,84 @@
+Airflow install & troubleshooting commands
+
+Date: 2026-02-01
+
+1) Diagnosis (what I ran to inspect state)
+
+# List pods, jobs, deployments and services
+kubectl -n airflow get pods,jobs,deployments,svc -o wide
+
+# Describe the migrations Job
+kubectl -n airflow describe job airflow-run-airflow-migrations
+
+# Get migration pod(s)
+kubectl -n airflow get pods -l job-name=airflow-run-airflow-migrations -o name
+
+# Fetch migration job logs (current and previous)
+kubectl -n airflow logs -l job-name=airflow-run-airflow-migrations --all-containers --tail=200
+kubectl -n airflow logs pod/<migration-pod> -c run-airflow-migrations --previous --tail=400
+
+# Describe Postgres pod (image pull / runtime errors)
+kubectl -n airflow describe pod airflow-postgresql-0
+
+
+2) Fixes applied (exact commands I used)
+
+# Edit chart values to override Postgres image (added under `postgresql:` in chart/values-override.yaml):
+# postgresql:
+#   enabled: true
+#   image:
+#     repository: postgres
+#     tag: "15"
+#     pullPolicy: IfNotPresent
+#   auth:
+#     username: postgres
+#     password: postgres
+#     database: airflow
+
+# Reapply the chart (longer timeout for hooks)
+helm upgrade --install airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --set-string images.airflow.tag="0.0.1" --debug --timeout 10m0s
+
+# (Optionally tried to patch statefulset image but better to update values and recreate pod)
+kubectl -n airflow patch statefulset airflow-postgresql --type='json' -p '[{"op":"replace","path":"/spec/template/spec/containers/0/image","value":"postgres:15"}]'
+
+# Delete stale Postgres pod so StatefulSet recreates it with new image
+kubectl -n airflow delete pod airflow-postgresql-0
+
+# Wait for Postgres to be ready
+kubectl -n airflow wait --for=condition=ready pod/airflow-postgresql-0 --timeout=3m
+
+# Check Postgres logs for errors
+kubectl -n airflow logs pod/airflow-postgresql-0 -c postgresql --tail=400
+
+# Create the missing `airflow` database (fixed migration failure)
+kubectl -n airflow exec -it airflow-postgresql-0 -- psql -U postgres -c "CREATE DATABASE airflow;"
+
+# Delete failing migration pod so the Job will retry now that DB exists
+kubectl -n airflow delete pod <migration-pod-name>
+# e.g.:
+kubectl -n airflow delete pod airflow-run-airflow-migrations-mgm92
+
+
+3) Verification & follow-ups
+
+# Re-check pods and jobs
+kubectl -n airflow get pods -o wide
+kubectl -n airflow get jobs -o wide
+
+# Tail migration logs to confirm completion
+kubectl -n airflow logs -l job-name=airflow-run-airflow-migrations --all-containers --tail=200
+
+# Show helm chart defaults (helpful for locating subchart values)
+helm show values apache-airflow/airflow
+
+# Port-forward to access Airflow UI locally
+kubectl port-forward svc/airflow-api-server 8080:8080 --namespace airflow
+
+
+4) Notes / Tips
+- Root cause: chart referenced a bitnami Postgres image tag that wasn't available (ImagePullBackOff). Overriding the Postgres image to a known tag `postgres:15` fixed image pull.
+- After the pod started, Postgres reported "database \"airflow\" does not exist"; manually creating the DB allowed the migration Job to succeed.
+- If you want these steps permanently in your workflow, consider adding the Postgres image override and an optional `kubectl exec ... CREATE DATABASE` in `install_airflow.sh` or a README troubleshooting section.
+
+
+-- end --

@@ -1,0 +1,55 @@
+Airflow quick-start checklist (what to run before port-forwarding API server)
+
+Date: 2026-02-01
+
+Purpose: Minimal steps to confirm Airflow is healthy and ready before running:
+  kubectl port-forward svc/airflow-api-server 8080:8080 --namespace airflow
+
+1) Ensure the namespace and Helm release exist
+# check namespace
+kubectl get namespace airflow || kubectl create namespace airflow
+
+# check Helm release
+helm status airflow --namespace airflow || helm upgrade --install airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --set-string images.airflow.tag="0.0.1"
+
+2) Ensure images you need are present (kind only)
+# If you're running in kind and you built the local image
+kind load docker-image my-dags:0.0.1
+
+3) Confirm migrations & jobs are finished
+# See migration Job
+kubectl -n airflow get jobs | grep migrate || kubectl -n airflow get jobs
+# Tail migration logs if the Job shows Active or Failed
+kubectl -n airflow logs -l job-name=airflow-run-airflow-migrations --all-containers --tail=200
+
+4) Check PostgreSQL is running and ready
+# Pod status
+kubectl -n airflow get pod -l app.kubernetes.io/name=postgresql -o wide
+# Describe if not Ready
+kubectl -n airflow describe pod airflow-postgresql-0
+# Inspect logs
+kubectl -n airflow logs pod/airflow-postgresql-0 -c postgresql --tail=200
+
+# If the DB "airflow" is missing (see logs "database \"airflow\" does not exist") create it:
+kubectl -n airflow exec -it airflow-postgresql-0 -- psql -U postgres -c "CREATE DATABASE airflow;"
+
+5) Confirm core components are Ready
+# API Server, Scheduler, Triggerer, Dag Processor
+kubectl -n airflow get pods -o wide
+# Check API server logs for readiness errors
+kubectl -n airflow logs -l component=api-server --tail=200
+
+6) Optional checks / fixes
+# If a pod has ImagePullBackOff, inspect image and update values-override.yaml to override image
+# If git-sync init containers fail because secret missing, either create the secret or disable credentials: set `dags.gitSync.credentialsSecret: null` in chart/values-override.yaml
+
+7) Finally, port-forward the API server (run from local shell)
+kubectl -n airflow port-forward svc/airflow-api-server 8080:8080 --namespace airflow
+# Then open: http://localhost:8080 (or check API version endpoint: http://localhost:8080/api/v2/version)
+
+8) Quick troubleshooting commands
+kubectl -n airflow describe pod <pod-name>
+kubectl -n airflow logs pod/<pod-name> -c <container>
+helm show values apache-airflow/airflow
+
+-- end --

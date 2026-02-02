@@ -1,4 +1,4 @@
-{
+kubectl log sleep-pod -n my-namespace{
   "datasets": [
     {
       "name": "ca235c33",
