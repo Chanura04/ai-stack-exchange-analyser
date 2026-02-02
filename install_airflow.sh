@@ -8,8 +8,8 @@ helm repo update
 helm show values apache-airflow/airflow > chart/values-example.yaml
 
 # Export values for Airflow docker image
-set IMAGE_NAME=my-dags
 # set IMAGE_TAG=$(date +%Y%m%d%H%M%S)
+set IMAGE_NAME=my-dags
 set IMAGE_TAG=0.0.1
 set NAMESPACE=airflow
 set RELEASE_NAME=airflow
