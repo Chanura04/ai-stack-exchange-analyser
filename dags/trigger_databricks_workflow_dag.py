@@ -1,6 +1,6 @@
 from airflow.sdk import DAG
 from airflow.providers.databricks.operators.databricks import DatabricksRunNowOperator
-from produce_data_assets import posts_asset, users_asset
+from produce_data_assets_3 import posts_asset, users_asset
 
 
 with DAG(
@@ -10,7 +10,7 @@ with DAG(
     run_databricks_workflow = DatabricksRunNowOperator(
         task_id="run_databricks_workflow",
         databricks_conn_id="databricks_conn",
-        job_id="879157959924010"
+        job_id="308838823871271"
     )
 
     run_databricks_workflow
