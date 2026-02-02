@@ -22,7 +22,8 @@ jobs:
           IMAGE_TAG=0.0.1
           IMAGE_NAME=my-dags
           docker build --pull --tag ${{ secrets.ECR_REGISTRY }}/my-dags:0.0.1 -f cicd/Dockerfile .
-          docker push ${{ secrets.ECR_REGISTRY }}/my-dags:0.0.1
+          docker push ${{ secrets.ECR_REGISTRY }}/my-dags-repo:0.0.1
+
 
 
 
