@@ -22,7 +22,6 @@ helm upgrade airflow apache-airflow/airflow --namespace airflow -f chart/values-
 kubectl port-forward svc/airflow-api-server 8080:8080 --namespace airflow
 
 
-kubectl describe pod airflow-api-server-597cdd769c-98tvc -n airflow; echo '---'; kubectl logs -n airflow pod/airflow-api-server-597cdd769c-98tvc -c airflow-api-server --tail=200 ; true; echo '---'; kubectl describe pod airflow-create-user-5f69b -n airflow; echo '---'; kubectl logs -n airflow pod/airflow-create-user-5f69b --tail=200 ; true; echo '---'; helm get all airflow -n airflow
 
 
 
@@ -32,8 +31,6 @@ kubectl describe pod airflow-api-server-597cdd769c-98tvc -n airflow; echo '---';
 
 
 
-
-echo Starting full cleanup: deleting and recreating the kind cluster, rebuilding DAG image, and reinstalling Airflow; kind delete cluster --name kind ; true; kind create cluster --image kindest/node:v1.29.4; helm repo add apache-airflow https://airflow.apache.org ; true; helm repo update; docker build --pull --tag my-dags:0.0.1 -f cicd/Dockerfile .; kind load docker-image my-dags:0.0.1; kubectl create namespace airflow ; true; kubectl apply -f k8s/secrets/git-secrets.yaml; helm upgrade airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --set images.airflow.repository=apache/airflow --set-string images.airflow.tag="0.0.1"  --debug; kubectl get pods -n airflow -o wide^C
 
 # Build the image and load it into kind
 # docker build --pull --tag $IMAGE_NAME:$IMAGE_TAG -f cicd/Dockerfile .

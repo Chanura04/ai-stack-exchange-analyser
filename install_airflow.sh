@@ -15,8 +15,8 @@ set NAMESPACE=airflow
 set RELEASE_NAME=airflow
 
 # Build the image and load it into kind
-docker build --pull --tag my-dags:0.0.4 -f cicd/Dockerfile .
-kind load docker-image my-dags:0.0.4
+docker build --pull --tag my-dags:0.0.1 -f cicd/Dockerfile .
+kind load docker-image my-dags:0.0.1
 
 # Create a namespace
 kubectl create namespace airflow
@@ -30,7 +30,7 @@ kubectl apply -f k8s/secrets/git-secrets.yaml
 #     --set-string images.airflow.tag="0.0.1" \
 #     --debug
 
-helm install airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --set-string images.airflow.tag="0.0.4"  --debug
+helm install airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --set-string images.airflow.tag="0.0.1" --debug
 
 # helm install airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --set images.airflow.repository=my-dags --set images.airflow.tag=0.0.1 --no-hooks --debug
 
@@ -60,4 +60,3 @@ helm install airflow apache-airflow/airflow --namespace airflow -f chart/values-
 
 helm upgrade airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --debug
  
-kubectl logs pod/airflow-dag-processor-67f657bbc7-w5z74  -n airflow -c git-sync

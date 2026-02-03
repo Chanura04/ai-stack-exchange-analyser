@@ -10,7 +10,7 @@ Purpose: Minimal steps to confirm Airflow is healthy and ready before running:
 kubectl get namespace airflow || kubectl create namespace airflow
 
 # check Helm release
-helm status airflow --namespace airflow | helm upgrade --install airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --set-string images.airflow.tag="0.0.1"
+helm status airflow --namespace airflow || helm upgrade --install airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --set-string images.airflow.tag="0.0.1"
 
 2) Ensure images you need are present (kind only)
 # If you're running in kind and you built the local image

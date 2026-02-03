@@ -16,6 +16,6 @@ with DAG(
     @task
     def goodbye_world():
         time.sleep(5)
-        print("Goodbye world,_________________ from Airflow!")
+        print("Goodbye world, from Airflow!")
     
     hello_world() >> goodbye_world()

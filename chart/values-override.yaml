@@ -7,10 +7,8 @@ webserverSecretKey: "p9NwQ3xLz6RkT1aYb4UeG8cVh2PmW7sKd0FjS3rQv8ZtX5wBq1CnH9Ly0Ds
 # Images
 images:
   airflow:
-    repository: apache/airflow
-    tag: 3.0.2
-   # or whichever version you want
-
+    repository: my-dags
+    tag: "0.0.1"
     # Specifying digest takes precedence over tag.
     digest: ~
     pullPolicy: IfNotPresent
@@ -42,7 +40,7 @@ postgresql:
   enabled: true
   image:
     repository: postgres
-    tag: "16"
+    tag: "15"
     pullPolicy: IfNotPresent
   auth:
     username: postgres
