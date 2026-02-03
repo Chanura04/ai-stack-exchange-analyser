@@ -82,3 +82,5 @@ kubectl port-forward svc/airflow-api-server 8080:8080 --namespace airflow
 
 
 -- end --
+
+helm install airflow apache-airflow/airflow -n airflow -f chart/values-override.yaml

@@ -15,8 +15,8 @@ set NAMESPACE=airflow
 set RELEASE_NAME=airflow
 
 # Build the image and load it into kind
-docker build --pull --tag my-dags:0.0.1 -f cicd/Dockerfile .
-kind load docker-image my-dags:0.0.1
+docker build --pull --tag my-dags:0.0.4 -f cicd/Dockerfile .
+kind load docker-image my-dags:0.0.4
 
 # Create a namespace
 kubectl create namespace airflow
@@ -30,7 +30,7 @@ kubectl apply -f k8s/secrets/git-secrets.yaml
 #     --set-string images.airflow.tag="0.0.1" \
 #     --debug
 
-helm install airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --set-string images.airflow.tag="0.0.1" --debug
+helm install airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --set-string images.airflow.tag="0.0.4"  --debug
 
 # helm install airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --set images.airflow.repository=my-dags --set images.airflow.tag=0.0.1 --no-hooks --debug
 
@@ -50,3 +50,13 @@ docker build --pull -t my-dags:0.0.1 -f cicd/Dockerfile .
 
 #get all pods , deployments , services in airflow namespace
 kubectl get all -n airflow
+#if there is error 
+kubectl logs -n airflow pod/airflow-api-server-7997c49769-6z2hg      -c api-server -f
+
+helm uninstall airflow -n airflow
+
+helm install airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml  --set images.airflow.tag=3.0.2
+
+
+helm upgrade airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --debug
+ 
