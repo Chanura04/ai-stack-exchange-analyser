@@ -60,3 +60,4 @@ helm install airflow apache-airflow/airflow --namespace airflow -f chart/values-
 
 helm upgrade airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --debug
  
+kubectl logs pod/airflow-dag-processor-67f657bbc7-w5z74  -n airflow -c git-sync

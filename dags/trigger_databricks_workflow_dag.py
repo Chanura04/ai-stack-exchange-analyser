@@ -1,5 +1,5 @@
 # from airflow.sdk import DAG
-from airflow import DAG
+from airflow.sdk import DAG
 
 from airflow.providers.databricks.operators.databricks import DatabricksRunNowOperator
 from produce_data_assets_3 import posts_asset, users_asset
