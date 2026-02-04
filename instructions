@@ -1,1 +1,62 @@
-for do the ECR need to add this AmazonEC2ContainerRegistryPowerUser policy in imuser permissions
+// for do the ECR need to add this AmazonEC2ContainerRegistryPowerUser policy in imuser permissions
+
+
+
+
+
+
+Go to Airflow UI → Admin > Connections
+
+if url https://dbc-8b41fabb-9a3c.cloud.databricks.com/jobs/308838823871271?autoLogin=true&...
+then host is https://dbc-8b41fabb-9a3c.cloud.databricks.com
+
+Click Create or edit your existing connection (let’s say it’s called databricks_conn)
+
+Fill in the details:
+
+Conn Id: databricks_conn
+
+Conn Type: HTTP
+
+Host: https://dbc-8b41fabb-9a3c.cloud.databricks.com
+
+Extra: Paste the JSON below but replace <your-secret-token> with your actual token:
+
+{
+  "Authorization": "Bearer <your-secret-token>"
+}
+
+
+
+// IAM → Users → chanura → Create policy
+// {
+//   "Version": "2012-10-17",
+//   "Statement": [
+//     {
+//       "Effect": "Allow",
+//       "Action": "s3:PutObject",
+//       "Resource": "arn:aws:s3:::data-platform-post-users/raw/*"
+//     }
+//   ]
+// }
+// IAM → Users → chanura → Permissions → Add permissions → Create policy → JSON
+
+add aws_conn as connection aws keys
+
+
+
+
+// S3 → data-platform-post-users → Permissions → Bucket policy
+// {
+//   "Version": "2012-10-17",
+//   "Statement": [
+//     {
+//       "Effect": "Allow",
+//       "Principal": {
+//         "AWS": "arn:aws:iam::195322290700:user/chanura"
+//       },
+//       "Action": "s3:PutObject",
+//       "Resource": "arn:aws:s3:::data-platform-post-users/raw/*"
+//     }
+//   ]
+// }
