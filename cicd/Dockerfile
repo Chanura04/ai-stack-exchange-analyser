@@ -1,7 +1,11 @@
-FROM apache/airflow:3.0.2-python3.11
+FROM apache/airflow:3.1.7-python3.13
 
-COPY ./dags/ /opt/airflow/dags/
+USER root
+COPY ../requirements.txt /requirements.txt
+RUN chown airflow: /requirements.txt
 
-COPY ./requirements.txt .
+USER airflow
+RUN pip install --no-cache-dir -r /requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
+COPY ../dags /opt/airflow/dags
+

@@ -1,5 +1,7 @@
-executor: "KubernetesExecutor"
-# executor: "LocalExecutor"
+# executor: "KubernetesExecutor"
+executor: "LocalExecutor"
+# executor: "CeleryExecutor"
+
 
 fernetKey: "T4n2q3dZlL4mQ8Xr0y7C5bR2fKp9gS1uVx8aC4p6g0E="
 webserverSecretKey: "p9NwQ3xLz6RkT1aYb4UeG8cVh2PmW7sKd0FjS3rQv8ZtX5wBq1CnH9Ly0DsE4R"
@@ -40,7 +42,7 @@ postgresql:
   enabled: true
   image:
     repository: postgres
-    tag: "15"
+    tag: "16"
     pullPolicy: IfNotPresent
   auth:
     username: postgres

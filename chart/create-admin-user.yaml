@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-admin-user
+  namespace: airflow
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: create-user
+          image: apache/airflow:3.0.2
+          env:
+            - name: AIRFLOW__CORE__FERNET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-fernet-key
+                  key: fernet-key
+            - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+              value: postgresql+psycopg2://airflow:admin@postgres:5432/airflow
+            - name: AIRFLOW__API__SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-api-secret-key
+                  key: api-secret-key
+          command: ["airflow"]
+          args: ["db", "init"]
+        - name: create-user-admin
+          image: apache/airflow:3.0.2
+          env:
+            - name: AIRFLOW__CORE__FERNET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-fernet-key
+                  key: fernet-key
+            - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+              value: postgresql+psycopg2://airflow:admin@postgres:5432/airflow
+          command: ["airflow"]
+          args: ["users", "create",
+                 "--username", "admin",
+                 "--firstname", "Admin",
+                 "--lastname", "User",
+                 "--role", "Admin",
+                 "--email", "admin@example.com",
+                 "--password", "admin123"]

@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_container
+    environment:
+      POSTGRES_DB: airflow_db
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+    ports:
+      - "5000:5432"
+
+  airflow:
+    container_name: airflow_container
+    build:
+      context: .
+      dockerfile: cicd/Dockerfile
+    ports:
+      - "8000:8080"
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@db:5432/airflow_db
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    depends_on:
+      - db
+    volumes:
+      - ./dags:/opt/airflow/dags   # <-- mount your local DAGs folder
+    command: >
+      
+      bash -c "airflow standalone"

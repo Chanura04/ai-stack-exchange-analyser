@@ -3,4 +3,6 @@ apache-airflow-providers-databricks==7.6.0
 databricks-sql-connector==4.2.4
 databricks-sqlalchemy==2.0.8
 thrift==0.20.0
+flask==3.0.3
+flask-appbuilder==4.5.0
 

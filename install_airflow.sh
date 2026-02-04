@@ -24,6 +24,17 @@ kubectl create namespace airflow
 # Apply kubernetes secrets
 kubectl apply -f k8s/secrets/git-secrets.yaml
 
+
+kubectl apply -f chart/postgres.yaml
+kubectl apply -f chart/airflow-secrets.yaml
+kubectl apply -f chart/airflow-db-init.yaml
+kubectl apply -f chart/airflow-user.yaml
+kubectl apply -f chart/airflow-scheduler.yaml
+kubectl apply -f chart/airflow-web.yaml
+
+kubectl exec -it airflow-webserver-6d9784c7c6-nftlv -n airflow -- airflow users create --username admin --firstname Admin  --lastname User  --role Admin  --email admin@example.com --password admin
+
+
 # Install Airflow using Helm
 # helm install airflow apache-airflow/airflow \
 #     --namespace airflow -f chart/values-override.yaml \
@@ -59,4 +70,11 @@ helm install airflow apache-airflow/airflow --namespace airflow -f chart/values-
 
 
 helm upgrade airflow apache-airflow/airflow --namespace airflow -f chart/values-override.yaml --debug
+
+
+kubectl exec -it pod/airflow-api-server-597cdd769c-h27wc -n airflow -- airflow users create  --username admin  --firstname Admin --lastname User role Admin  --email admin@example.com  --password admin
+
+
+kubectl create secret generic airflow-api-secret-key -n airflow --from-literal=api-secret-key=$(openssl rand -hex 32)
+
  

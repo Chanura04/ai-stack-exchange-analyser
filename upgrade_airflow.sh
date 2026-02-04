@@ -72,3 +72,6 @@ kubectl port-forward svc/airflow-api-server 8080:8080 --namespace airflow
 # #refresh
 #  kubectl rollout restart deployment/airflow-dag-processor -n airflow
 #  kubectl rollout status deployment/airflow-dag-processor -n airflow --timeout=120s
+
+
+docker-compose run airflow airflow create-user --username admin  --firstname Admin   --lastname User --role Admin  --email admin@example.com   --password admin
