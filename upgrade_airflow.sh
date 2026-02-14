@@ -1,3 +1,10 @@
+password - 9ZkUKQeGhx65mBMZ
+
+
+
+docker-compose down -v
+docker-compose up --build
+
 
 
 docker-compose run --rm airflow airflow db check-migrations
