@@ -2,6 +2,15 @@
 
 This project is an end-to-end data engineering pipeline designed to analyze the [AI Stack Exchange](https://ai.meta.stackexchange.com/) community. It orchestrates the ingestion of raw data from the Internet Archive into a data lake, processes it using PySpark on Databricks, and generates insights via dashboards.
 
+## 📺 Video Walkthroughs
+
+### 🔹 Part 1: System Overview
+[![Watch the video](https://img.youtube.com/vi/xYIdiGGgboo/0.jpg)](https://www.youtube.com/watch?v=xYIdiGGgboo)
+
+---
+
+### 🔹 Part 2: Deployment
+[![Watch the video](https://img.youtube.com/vi/4EoIlkwag2k/0.jpg)](https://www.youtube.com/watch?v=4EoIlkwag2k)
 ## Data Source
 
 The dataset is sourced from the Stack Exchange Data Dump on Archive.org:
