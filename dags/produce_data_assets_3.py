@@ -1,6 +1,5 @@
 import logging
 import os
-
 import py7zr
 import requests
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook

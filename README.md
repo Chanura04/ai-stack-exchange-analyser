@@ -11,6 +11,11 @@ This project is an end-to-end data engineering pipeline designed to analyze the 
 
 ### 🔹 Part 2: Deployment
 [![Watch the video](https://img.youtube.com/vi/4EoIlkwag2k/0.jpg)](https://www.youtube.com/watch?v=4EoIlkwag2k)
+
+### 🔹 Part 3: Dashboard
+
+![Dashboard Preview](image.png)
+
 ## Data Source
 
 The dataset is sourced from the Stack Exchange Data Dump on Archive.org:
@@ -57,9 +62,7 @@ To run the Airflow infrastructure locally, you need:
 
 ## Getting Started
 
-
-
-**Quickstart:**
+### 1. Quickstart
 
 Run the interactive quickstart script to set up the cluster, build images, and install Airflow:
 
