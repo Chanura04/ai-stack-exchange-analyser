@@ -24,6 +24,20 @@ kubectl log sleep-pod -n my-namespace{
         "where PostType=\"Answer\"\r\n",
         "group by Id, Reputation"
       ]
+    },
+    {
+      "name": "1eb28916",
+      "displayName": "Post Type Data Overview",
+      "queryLines": [
+        "\r\n",
+        "SELECT\r\n",
+        "  PostType,\r\n",
+        "  COUNT(*) AS post_count\r\n",
+        "FROM default.marts_posts_users\r\n",
+        "GROUP BY PostType\r\n",
+        "ORDER BY post_count DESC;\r\n",
+        "\r\n"
+      ]
     }
   ],
   "pages": [
@@ -55,6 +69,47 @@ kubectl log sleep-pod -n my-namespace{
             ],
             "spec": {
               "version": 3,
+              "mark": {
+                "colors": [
+                  "#C90AFF",
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
               "widgetType": "line",
               "encodings": {
                 "x": {
@@ -75,7 +130,7 @@ kubectl log sleep-pod -n my-namespace{
           "position": {
             "x": 0,
             "y": 0,
-            "width": 3,
+            "width": 12,
             "height": 7
           }
         },
@@ -103,6 +158,47 @@ kubectl log sleep-pod -n my-namespace{
             ],
             "spec": {
               "version": 3,
+              "mark": {
+                "colors": [
+                  "#A5FF00",
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
               "widgetType": "bar",
               "encodings": {
                 "x": {
@@ -124,9 +220,9 @@ kubectl log sleep-pod -n my-namespace{
             }
           },
           "position": {
-            "x": 3,
-            "y": 0,
-            "width": 3,
+            "x": 6,
+            "y": 7,
+            "width": 6,
             "height": 7
           }
         },
@@ -154,6 +250,47 @@ kubectl log sleep-pod -n my-namespace{
             ],
             "spec": {
               "version": 3,
+              "mark": {
+                "colors": [
+                  "#46F700",
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
               "widgetType": "scatter",
               "encodings": {
                 "x": {
@@ -173,8 +310,8 @@ kubectl log sleep-pod -n my-namespace{
           },
           "position": {
             "x": 0,
-            "y": 7,
-            "width": 6,
+            "y": 14,
+            "width": 12,
             "height": 8
           }
         },
@@ -189,13 +326,115 @@ kubectl log sleep-pod -n my-namespace{
           },
           "position": {
             "x": 0,
-            "y": 15,
-            "width": 6,
+            "y": 22,
+            "width": 12,
             "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "1b2c4e96",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1eb28916",
+                  "fields": [
+                    {
+                      "name": "PostType",
+                      "expression": "`PostType`"
+                    },
+                    {
+                      "name": "sum(post_count)",
+                      "expression": "SUM(`post_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 1,
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "combo",
+              "encodings": {
+                "x": {
+                  "fieldName": "PostType",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "primary": {
+                    "fields": [
+                      {
+                        "fieldName": "sum(post_count)"
+                      }
+                    ]
+                  },
+                  "secondary": {
+                    "fields": []
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 7
           }
         }
       ],
-      "pageType": "PAGE_TYPE_CANVAS"
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
     },
     {
       "name": "b040dc2b",
