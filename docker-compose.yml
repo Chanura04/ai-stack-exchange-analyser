@@ -25,4 +25,4 @@ services:
       - ./dags:/opt/airflow/dags   # <-- mount your local DAGs folder
     command: >
       
-      bash -c "airflow standalone"
+      bash -c "airflow standalone"   

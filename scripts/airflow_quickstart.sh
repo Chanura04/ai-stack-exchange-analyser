@@ -11,7 +11,7 @@ RUN=false
 if [[ ${1:-} == "--run" ]]; then
   RUN=true
 fi
-
+   
 echo "\n=== Airflow Quickstart / Runbook ===\n"
 
 check_cmd() {

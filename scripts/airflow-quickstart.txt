@@ -21,7 +21,7 @@ kind load docker-image my-dags:0.0.1
 kubectl -n airflow get jobs | grep migrate || kubectl -n airflow get jobs
 # Tail migration logs if the Job shows Active or Failed
 kubectl -n airflow logs -l job-name=airflow-run-airflow-migrations --all-containers --tail=200
-
+   
 4) Check PostgreSQL is running and ready
 # Pod status
 kubectl -n airflow get pod -l app.kubernetes.io/name=postgresql -o wide

@@ -78,3 +78,4 @@ kubectl exec -it pod/airflow-api-server-597cdd769c-h27wc -n airflow -- airflow u
 kubectl create secret generic airflow-api-secret-key -n airflow --from-literal=api-secret-key=$(openssl rand -hex 32)
 
  
+     

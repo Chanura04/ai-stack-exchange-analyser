@@ -21,4 +21,4 @@ with DAG(dag_id="trigger_databricks_job", start_date=datetime(2023, 1, 1), sched
     trigger = PythonOperator(
         task_id="trigger_databricks_job",
         python_callable=trigger_databricks_job,
-    )
+    )   

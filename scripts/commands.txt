@@ -15,4 +15,4 @@ for delete pod:
 kubectl delete pod sleep-pod -n my-namespace
 
 for delete cluster:
-kind delete cluster --name kind
+kind delete cluster --name kind   

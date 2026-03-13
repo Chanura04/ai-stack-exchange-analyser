@@ -18,7 +18,7 @@ run() {
     read -p "Run this step now? [y/N] " ans || true
     if [ "${ans,,}" = "y" ]; then
       eval "$2"
-    else
+    else  
       echo "Skipped"
     fi
   fi

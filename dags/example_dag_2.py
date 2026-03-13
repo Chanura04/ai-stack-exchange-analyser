@@ -7,11 +7,10 @@ with DAG(
     start_date=datetime.datetime(2021, 1, 1),
     schedule="@daily"
 ):
-    
     @task
     def hello_world():
         time.sleep(5)
-        print("Hello world, from Airflow_2!")
+        print("Hello world, from Airflow_1")
     
     @task
     def goodbye_world_2():

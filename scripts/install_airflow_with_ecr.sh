@@ -23,7 +23,7 @@
 # # Port forward the API server
 # kubectl port-forward svc/airflow-api-server 8080:8080 --namespace airflow
 
-
+   
 
 
 # aws configure

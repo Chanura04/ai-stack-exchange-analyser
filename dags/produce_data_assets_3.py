@@ -27,7 +27,7 @@ def produce_data_assets_3():
     # Extract the zipped file
     logging.info(f"Extracting {output_path} to {extract_path}")
     with py7zr.SevenZipFile(output_path, mode='r') as archive:
-        archive.extractall(path=extract_path)
+        archive.extractall(path=extract_path)   
     
     # Load the file to S3
     s3_hook = S3Hook(aws_conn_id="aws_conn")

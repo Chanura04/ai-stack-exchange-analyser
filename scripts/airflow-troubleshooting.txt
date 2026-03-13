@@ -20,7 +20,7 @@ kubectl -n airflow logs pod/<migration-pod> -c run-airflow-migrations --previous
 # Describe Postgres pod (image pull / runtime errors)
 kubectl -n airflow describe pod airflow-postgresql-0
 
-
+   
 2) Fixes applied (exact commands I used)
 
 # Edit chart values to override Postgres image (added under `postgresql:` in chart/values-override.yaml):

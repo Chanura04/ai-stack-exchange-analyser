@@ -25,7 +25,7 @@ docker run -p 8080:8080 -it 195322290700.dkr.ecr.eu-north-1.amazonaws.com/my-dag
 
  docker-compose run --rm airflow airflow standalone
  docker-compose run airflow airflow db migrate
-   nalyser> airflow db migrate
+   nalyser> airflow db migrate   
 
 
    docker-compose run airflow airflow create-user --username admin  --firstname Admin   --lastname User --role Admin  --email admin@example.com   --password admin
